@@ -4,18 +4,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.*;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import org.w3c.dom.css.Rect;
-
-import javax.swing.*;
 
 
 public class Main extends Application {
@@ -23,7 +20,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Jaapani mõistatus");
         primaryStage.show();
-
 
         VBox vbox = new VBox();
         vbox.setSpacing(2);
@@ -34,18 +30,16 @@ public class Main extends Application {
 
         Label pealkiri = new Label("Tere tulemast mängu!");
 
-        Button submitButton = new Button("Alusta!");
-        //Pane pane1 = new Pane();
-        //vbox.getChildren().add(pealkiri);
-        //pealkiri.setTranslateX(100);
-        //pealkiri.setTranslateY(75);
-        //vbox.getChildren().add(submitButton);
-        //submitButton.setTranslateX(100);
-        //submitButton.setTranslateY(100);
+        Button submitButton1 = new Button("Mäng 1");        //teeb 3 nuppu, 3 mängu
+        submitButton1.setText("Mäng 1");
 
-        vbox.getChildren().addAll(pealkiri, submitButton);
+        Button submitButton2 = new Button("Mäng 2");
+        submitButton2.setText("Mäng 2");
 
-        submitButton.setText("Alusta");
+        Button submitButton3 = new Button("Mäng 3");
+        submitButton3.setText("Mäng 3");
+
+        vbox.getChildren().addAll(pealkiri, submitButton1, submitButton2, submitButton3); //kuvab boxi asjadega
 
 
        /* Esimese mõistatuse numbrid
@@ -58,54 +52,77 @@ public class Main extends Application {
         2, 4, 4, 4, 2
         */
 
-        submitButton.setOnAction((event) -> {
-            showGame();
+        submitButton1.setOnAction((event) -> {
+            showGame(0);
+        });
+        submitButton1.setOnAction((event) -> {
+            showGame(1);
+        });
+        submitButton1.setOnAction((event) -> {
+            showGame(2);
         });
 
+    }
 
-       /** public int black = 1;
-
-        public int white = 0;
-
-        public int[][] row_rules = {}**/
+    private void showGame(int nr) {
+        int pilt1 [][] =
+                {{0,1,0,1,0},
+                {1,1,1,0,1},
+                {1,1,1,1,1},
+                {0,1,1,1,0},
+                {0,0,1,0,0}};
 
         /** see peaks olema mustade ja valgete ruutude
          * lahenduse skeem**/
 
-        /**if (timeTaken < fastestTime) {
+   /** public int black = 1;
 
-            fastestTime = timeTaken;
+    public int white = 0;
 
-        see võiks olla aja võtmise jaoks,
-         annaks eraldi teate, kui on uus high score**/
+    public int[][] row_rules =
+            {{0,1,0,1,0},
+            {1,1,1,1,1},
+            {1,1,1,1,1},
+            {0,1,1,1,0},
+            {0,0,1,0,0}};
 
-
-    }
-
-    private void showGame() {
-        int pilt [][] = {{0,1,0,1,0},
-        {1,1,1,1,1},
-        {1,1,1,1,1},
-        {0,1,1,1,0},
-        {0,0,1,0,0}};
+         }**/
 
         GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
 
-        //grid.setGridLinesVisible(true);
+        grid.setGridLinesVisible(true);
         grid.setHgap(1);
         grid.setVgap(1);
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++){
+
+        for (int i = 0; i < 8; i++) {                       //teeb 8x8 ruudustiku, millest 5x5 on mäng
+            for (int j = 0; j < 8; j++) {
                 Rectangle rectangle = new Rectangle(50, 50);
-                rectangle.setFill(Color.LIGHTCORAL);
+                rectangle.setFill(Color.BEIGE);
+                grid.add(rectangle, i, j);
+                //teeb 50x50 pikslit suured ruudud
+            }}
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++) {
+                Rectangle rectangle = new Rectangle(50, 50);
+         /**Image pildike = new Image("Pilt/cat-150x150.jpg");
+         grid.getChildren().add(new ImageView(pildike));}}**/
+                rectangle.setFill(Color.DARKMAGENTA);
+                grid.add(rectangle, i, j);
+            }}
+
+            for (int i =3; i < 8; i++){
+                for (int j = 3; j < 8; j++)
+                {Rectangle rectangle = new Rectangle(50, 50);
+                    rectangle.setFill(Color.MAGENTA);               //algkuva on heleoranž
                 rectangle.setOnMouseClicked ((event) -> {
-                    if (event.getButton() == MouseButton.PRIMARY){
+                    if (event.getButton() == MouseButton.PRIMARY){  //vasak klikk teeb ruudu mustaks
                         rectangle.setFill(Color.BLACK);
                     }
                     else {
-                        rectangle.setFill(Color.WHITE);
+                        rectangle.setFill(Color.WHITE);             //parem klikk teeb ruudu valgeks
                     }
-
+                    //kontrolliSeisu();
 
                     System.out.println(event.getButton());
                 } );
@@ -119,7 +136,6 @@ public class Main extends Application {
         stage2.setScene(mõistatus);
         stage2.setTitle("Uus mäng");
         stage2.show();
-
 
     }
 }
