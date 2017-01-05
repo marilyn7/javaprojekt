@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -37,18 +38,18 @@ public class Main extends Application {
     public static GridPane grid = new GridPane();
 
     private int eeskuju [][] =
-                    {{0,1,0,1,1},
-                    {1,1,1,1,1},
-                    {1,1,1,1,1},
-                    {0,1,1,1,0},
-                    {0,0,1,0,0}};
+                    {{0,0,0,0,0},
+                            {1,1,1,1,1},
+                            {1,1,1,1,1},
+                            {1,1,1,1,1},
+                            {0,0,0,0,0}};
 
     private int activePicture[][]=
-                    {{0,1,0,1,1},
-                    {1,1,1,1,1},
-                    {1,1,1,1,1},
-                    {0,1,1,1,0},
-                    {0,0,1,0,0}};
+                    {{0,1,0,1,0},
+                            {1,1,1,1,1},
+                            {1,1,1,1,1},
+                            {0,1,1,1,0},
+                            {0,0,1,0,0}};
 
     private int syda [][]=
             {{0,1,0,1,0},
@@ -61,7 +62,7 @@ public class Main extends Application {
                     {{1,0,0,0,1},
                     {1,1,1,1,1},
                     {1,0,1,0,1},
-                    {1,1,1,1,1},
+                    {1,1,0,1,1},
                     {0,1,1,1,0}};
 
     private int male [][] =
@@ -72,11 +73,32 @@ public class Main extends Application {
                     {0,1,0,1,0}};
 
     private int maja [][]=
-                  {{0,0,1,0,0},
+             {{0,0,1,0,0},
                     {0,1,1,1,0},
                     {1,1,1,1,1},
                     {0,1,0,1,0},
                     {0,1,1,1,0}};
+
+    private int smile [][]=
+                    {{0,0,0,0,0},
+                    {0,1,0,1,0},
+                    {0,0,0,0,0},
+                    {1,0,0,0,1},
+                    {0,1,1,1,0}};
+
+    private int lill [][]=
+                     {{1,1,0,1,1},
+                     {1,1,0,1,1},
+                      {0,0,1,0,0},
+                      {1,1,0,1,1},
+                      {1,1,0,1,1}};
+
+    private int konn [][]=
+             {{1,0,1,0,1},
+                    {1,1,1,1,1},
+                    {0,1,1,1,0},
+                    {1,1,1,1,1},
+                    {1,0,0,0,1}};
 
     @Override
     public void start(Stage primaryStage) {
@@ -86,13 +108,25 @@ public class Main extends Application {
         VBox vbox = new VBox();
         vbox.setSpacing(2);
         vbox.setAlignment(Pos.CENTER);
-        Scene start = new Scene(vbox, 300, 250);
+        Scene start = new Scene(vbox, 350, 350);
         primaryStage.setScene(start);
         primaryStage.show();
 
         Label pealkiri = new Label("Tere tulemast mängu!");
 
-        Button submitButton1 = new Button("Mäng 1");        //teeb 3 nuppu, 3 mängu
+        Text opetus = new Text("Nonogram või jaapani mõistatus on mäng," +
+                " kus pilt ilmutatakse äärtes olevate numbrite abil." +
+                " Numbrid annavad teada, mitu järjestikust ruutu on antud reas või veerus vaja mustaks värvida. " +
+                "Oluline on tähele panna, et kui ühes reas või veerus on antud mitu erinevat arvu mustade ruutude täitmise kohta, " +
+                "siis jääb nende vahele vähemalt üks valge (tühi) ruut. Head lahendamist!"
+        );
+
+        opetus.setWrappingWidth(300);
+        opetus.setTextAlignment(TextAlignment.JUSTIFY);
+
+        Text rules = new Text("*** Vasak klikk = must ruut; parem klikk = valge ruut ***");
+
+        Button submitButton1 = new Button("Mäng 1");        //teeb 7 nuppu, 7 mängu
         submitButton1.setText("Mäng 1");
 
         Button submitButton2 = new Button("Mäng 2");
@@ -107,9 +141,14 @@ public class Main extends Application {
         Button submitButton5 = new Button("Mäng 5");
         submitButton5.setText("Mäng 5");
 
+        Button submitButton6 = new Button("Mäng 6");
+        submitButton6.setText("Mäng 6");
+
+        Button submitButton7 = new Button("Mäng 7");
+        submitButton7.setText("Mäng 7");
 
 
-        vbox.getChildren().addAll(pealkiri, submitButton1, submitButton2, submitButton3, submitButton4); //kuvab boxi asjadega
+        vbox.getChildren().addAll(pealkiri, submitButton1, submitButton2, submitButton3, submitButton4, submitButton5, submitButton6, submitButton7, opetus, rules); //kuvab boxi asjadega
 
         submitButton1.setOnAction((event) -> {
             setExample(syda);
@@ -129,6 +168,20 @@ public class Main extends Application {
             showGame(3);
         });
 
+        submitButton5.setOnAction((event) -> {
+            setExample(smile);
+            showGame(4);
+        });
+
+        submitButton6.setOnAction((event) -> {
+            setExample(lill);
+            showGame(5);
+        });
+
+        submitButton7.setOnAction((event) -> {
+            setExample(konn);
+            showGame(6);
+        });
     }
 
     private void setExample(int[][] picture){
@@ -147,6 +200,7 @@ public class Main extends Application {
         grid.setHgap(1);
         grid.setVgap(1);
 
+
         for (int i = 0; i < PICTURE_SIZE; i++) {
             for (int j = 0; j < 5; j++) {
                 activePicture [i][j]=0;       //teeb kõik nulliks
@@ -163,7 +217,7 @@ public class Main extends Application {
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++) {
                 Rectangle rectangle = new Rectangle(50, 50);
-                rectangle.setFill(Color.DARKGREY);
+                rectangle.setFill(Color.BLACK);
                 grid.add(rectangle, i, j);
             }
         }
@@ -172,7 +226,7 @@ public class Main extends Application {
             for (int i = 3; i < 8; i++){
                 for (int j = 3; j < 8; j++)
                 {Rectangle rectangle = new Rectangle(50, 50);
-                    rectangle.setFill(Color.MAGENTA);               //algkuva on roosa
+                    rectangle.setFill(Color.LIGHTPINK);               //algkuva on hall
                 rectangle.setOnMouseClicked ((event) -> {
                     if (event.getButton() == MouseButton.PRIMARY){  //vasak klikk teeb ruudu mustaks
                         rectangle.setFill(Color.BLACK);
@@ -195,8 +249,8 @@ public class Main extends Application {
             }
         }
 
-        Scene mõistatus = new Scene(grid, 450, 550);
-
+        Group root = new Group(grid);                    //abi saadud kommuun.koodikoolist
+        Scene mõistatus= new Scene(root, 450, 450);
         Stage stage2 = new Stage();
         stage2.setScene(mõistatus);
         stage2.setTitle("Uus mäng");
@@ -205,14 +259,14 @@ public class Main extends Application {
     }
 
     private void setNumbers(int[][] picture,GridPane grid){
-        int i,j,k,tempNr=0,placement = 2;
+        int i,j,k,tempNr=0,placement = 2;               //alustab lugemist 0st, kirjutamist alustab kolmandast ruudust (tagurpidi)
 
         List<Integer> numbers = new ArrayList<>();      //paneb klikitud numbrid arraylisti, et neid hiljem võrrelda algsega
 
-        for(i=0; i<this.PICTURE_SIZE; i++){
-            numbers.clear();
+        for(i=0; i<this.PICTURE_SIZE; i++){             //read
+            numbers.clear();                            //algul kustutab eelmised numbrid
             for(j=0; j<this.PICTURE_SIZE; j++){
-                if(picture[i][j] == this.BLACK_TILE){
+                if(picture[i][j] == this.BLACK_TILE){      //iga vasaku kliki tegevus lisatakse listi
                     tempNr++;
                 }else{
                     if(tempNr !=0 ) {
@@ -229,12 +283,12 @@ public class Main extends Application {
             for(k =numbers.size()-1; k>=0; k--){
                 Text text = new Text(numbers.get(k).toString());
                 text.setFont(Font.font(null, FontWeight.BOLD, 36)); //näitab, kui suured on kuvatavad numbrid
-                grid.add(text,placement,i+this.Y_OFFSET);
+                grid.add(text,placement,i+this.Y_OFFSET);           //y-teljel
                 placement--;
             }
         }
 
-        for(j=0; j<this.PICTURE_SIZE; j++){
+        for(j=0; j<this.PICTURE_SIZE; j++){             //kõik see sama nagu eelmine, ainult veergude kohta
             numbers.clear();
             for(i=0; i<this.PICTURE_SIZE; i++){
                 if(picture[i][j] == this.BLACK_TILE){
@@ -254,7 +308,7 @@ public class Main extends Application {
             for(k =numbers.size()-1; k>=0; k--){
                 Text text = new Text(numbers.get(k).toString());
                 text.setFont(Font.font(null, FontWeight.BOLD, 36));
-                grid.add(text,j+this.X_OFFSET,placement);
+                grid.add(text,j+this.X_OFFSET,placement);               //x-teljel
                 placement--;
             }
         }
@@ -262,41 +316,41 @@ public class Main extends Application {
 
     private boolean checkState(){
         int i,j;
-        System.out.println(this.printPicture(eeskuju));
-        System.out.println(this.printPicture(activePicture));
+        System.out.println(this.printPicture(eeskuju));         //prindib välja selle, milline peaks lahendus olema
+        System.out.println(this.printPicture(activePicture));   //prindib välja selle, milline on praegune lahendus
         for (i=0; i<PICTURE_SIZE; i++){
             for (j=0; j<PICTURE_SIZE; j++){
-                if (activePicture[i][j] != eeskuju [i][j]) {
-
-                    System.out.println("poolik");
+                if (activePicture[i][j] != eeskuju [i][j]) {        //kui aktiivne pilt ei ole sama mis peaks olema
+                                                                    //siis ei tagasta õiget
+                    System.out.println("poolik");                   //prindib sõna poolik
                     return false;
                 }
             }
         }
 
-        System.out.println("õige");
+        System.out.println("õige");                 //prindib sõna õige
 
         VBox vbox = new VBox();             //õige lahenduse korral tuleb nupp ÕIGE, mille saab kinni vajutada
         vbox.setSpacing(2);
-        vbox.setAlignment(Pos.CENTER);
+        vbox.setAlignment(Pos.CENTER);      //tähed on ruudu keskel
         Stage stage3 = new Stage();
-        Scene lahendus = new Scene(vbox, 100, 100);
+        Scene lahendus = new Scene(vbox, 100, 100); //popup on 100x100
         stage3.setScene(lahendus);
         stage3.show();
 
-        Button closebutton = new Button("Tubli!");
-        Label pealkiri2 = new Label("Õige lahendus");
-        vbox.getChildren().addAll(pealkiri2, closebutton);
+        Button closebutton = new Button("Tubli!");      //nupp ütleb Tubli!
+        Label pealkiri2 = new Label("Õige lahendus" + "");
+        vbox.getChildren().addAll(pealkiri2, closebutton);  //paneb vboxi nupu ja pealkirja
 
-        closebutton.setOnAction((event) -> {
+        closebutton.setOnAction((event) -> {        //nupule klikkides suletakse popup aken
             stage3.close();
             });
 
-        return true;
-        
+        return true;                    //kui lahendus on õige
+
 
     }
-    private String printPicture(int[][] picture){
+    private String printPicture(int[][] picture){   //
         String result = "";
         int i,j;
         for (i=0; i< PICTURE_SIZE; i++){
