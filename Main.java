@@ -239,11 +239,11 @@ public class Main extends Application {
                     }
                     System.out.println("clicked " + rectangle.getY() + " " +rectangle.getX());
 
-                    checkState();
+                    checkState();           //kontrollib seisu, milles praegune lahendus on (kas poolik v valmis)
 
                     System.out.println(event.getButton());
                 } );
-                    rectangle.setX(j);
+                    rectangle.setX(j);      //pöörab teiljed teistpidi
                     rectangle.setY(i);
                 grid.add(rectangle, i, j);
             }
@@ -350,7 +350,7 @@ public class Main extends Application {
 
 
     }
-    private String printPicture(int[][] picture){   //
+    private String printPicture(int[][] picture){   //teeb pildi numbrid stringiks
         String result = "";
         int i,j;
         for (i=0; i< PICTURE_SIZE; i++){
