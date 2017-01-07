@@ -2,8 +2,7 @@
 
 Nonogram või jaapani mõistatus on mäng, kus pilt ilmutatakse äärtes olevate numbrite abil. Numbrid annavad teada, mitu järjestikust ruutu on antud reas või veerus vaja mustaks värvida. Oluline on tähele panna, et kui ühes reas või veerus on antud mitu erinevat arvu mustade ruutude täitmise kohta, siis jääb nende vahele vähemalt üks valge (tühi) ruut.
 
-Vasak klikk = must ruut; parem klikk = valge ruut
-Left click = black square; right click = white square
+Vasak klikk = must ruut; parem klikk = valge ruut / Left click = black square; right click = white square
 
 Copyright (c) 2017 Marilyn Võsu
 
